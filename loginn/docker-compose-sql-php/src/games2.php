@@ -17,10 +17,10 @@
     </tr>
 
     <?php
-    $conn = require_once "partials/dbconnection.php";
+    $conn =  "partials/dbconnection.php";
     $platform = "PS4";
 
-    $stmt = $conn->prepare("SELECT * FROM GAMES WHERE platform = ?");
+    $stmt = $conn->prepare("SELECT * FROM GAMES2 WHERE platform = ?");
     $stmt->bind_param("s", $platform);
     $stmt->execute();
     $result = $stmt->get_result();
