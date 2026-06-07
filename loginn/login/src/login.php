@@ -1,32 +1,33 @@
+<?php
+session_start();
+$conn = require_once "partials/dbconnection.php";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $stmt = $conn->prepare("SELECT * FROM user WHERE username = ? AND email = ?");
+  $stmt->bind_param("ss", $_POST['name'], $_POST['email']);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $row = $result->fetch_assoc();
+
+  if ($row && password_verify($_POST['password'], $row['password'])) {
+    $_SESSION['ingelogd'] = true;
+    header("Location: overview.php");
+    exit();
+  } else {
+    echo "Invalid credentials.";
+  }
+  $stmt->close();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Games; met SQL prepared statement en partial</title>
+  <title>Login</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-  <?php
-  $conn = require_once "partials/dbconnection.php";
-
-  
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $conn->prepare("SELECT * FROM user WHERE username = ? AND email = ? AND password = ?");
-    $stmt->bind_param("sss", $_POST['name'], $_POST['email'], $_POST['password']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 1) {
-      echo "Login successful!";
-    } else {
-      echo "Invalid credentials.";
-    }
-    $stmt->close();
-  }
-  ?>
-
   <table>
     <tr>
       <th>Username</th>

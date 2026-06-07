@@ -1,7 +1,7 @@
 <?php
 $servername = "mysql";
-$username = ini_get(option: 'mysqli.default_user'); //from php.ini
-$password = ini_get(option: "mysqli.default_pw"); //from php.ini
+$username = ini_get(option: 'mysqli.default_user'); 
+$password = ini_get(option: "mysqli.default_pw"); 
 
 try {
     $conn = new mysqli($servername, $username, $password, "userdata");
