@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['ingelogd'])) {
-  header("Location: password.html");
+  header("Location: login.php");
   exit();
 }
 
@@ -25,6 +25,7 @@ $conn = require_once "partials/dbconnection.php";
       <th>Username</th>
       <th>Password</th>
       <th>Email</th>
+      <th>rol</th>
       <th>Actie</th>
     </tr>
     <?php
@@ -38,7 +39,10 @@ $conn = require_once "partials/dbconnection.php";
       echo "<td>" . $row['username'] . "</td>";
       echo "<td>" . $row['password'] . "</td>";
       echo "<td>" . $row['email'] . "</td>";
-      echo "<td><a href='update.php?id=" . $row['id'] . "'>Edit</a></td>";
+      echo "<td>" . $row['rol'] . "</td>";
+      echo "<td>";
+      echo "<a href='update.php?id=" . $row['id'] . "'>Edit </a>";
+      echo "<a href='delete.php?id=" . $row['id'] . "'onclick=\"return confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?');\">Verwijderen</a>";
       echo "</tr>";
     }
     echo "</table>";
