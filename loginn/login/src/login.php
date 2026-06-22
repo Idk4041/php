@@ -5,8 +5,8 @@ $error = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $conn = require_once "partials/dbconnection.php";
 
-  $stmt = $conn->prepare("SELECT * FROM user WHERE username = ? AND email = ?");
-  $stmt->bind_param("ss", $_POST['name'], $_POST['email']);
+  $stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
+  $stmt->bind_param("s", $_POST['name']);
   $stmt->execute();
   $result = $stmt->get_result();
   $row = $result->fetch_assoc();
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: overview.php");
     exit();
   } else {
-    $error = "Combinatie van gebruikersnaam, e-mail en wachtwoord klopt niet.";
+    $error = "Combinatie van gebruikersnaam en wachtwoord klopt niet.";
   }
 }
 ?>
